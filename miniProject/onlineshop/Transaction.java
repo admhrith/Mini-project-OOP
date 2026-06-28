@@ -68,4 +68,8 @@ public class Transaction implements PaymentProcessor {
         System.out.println("TOTAL NET BILL: RM " + totalPrice);
         System.out.println("-------------------------------------\n");
     }
+
+    public ArrayList<TransactionItem> getOrderedItems() {
+    return orderedItems;
+    }
 }
