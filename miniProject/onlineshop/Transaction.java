@@ -48,6 +48,9 @@ public class Transaction implements PaymentProcessor {
 
     public double getTotalPrice() { return totalPrice; }
     public String getTransactionId() { return transactionId; }
+    public String getDate() {
+        return date;
+    }
 
     // REQ 4: Overriding Interface Abstract Method
     @Override

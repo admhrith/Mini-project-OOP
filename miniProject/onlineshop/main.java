@@ -1,6 +1,6 @@
 package miniProject.onlineshop;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
         // 1. Initialize the system
         ShopManagementSystem shop = new ShopManagementSystem();

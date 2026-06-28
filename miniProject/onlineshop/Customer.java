@@ -21,6 +21,14 @@ public class Customer extends User{
         return shoppingCart;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public void displayProfile() {
         System.out.println("===== CUSTOMER PROFILE =====");
