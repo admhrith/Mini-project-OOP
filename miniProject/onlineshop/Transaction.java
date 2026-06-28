@@ -8,6 +8,8 @@ public class Transaction implements PaymentProcessor {
     private String date;
     private String customerId;
     private double totalPrice;
+    private String paymentMethod;
+    private String paymentStatus;
     
     // REQ 2: Composition
     // Transaction control its items
@@ -19,6 +21,8 @@ public class Transaction implements PaymentProcessor {
         this.customerId = customerId;
         this.orderedItems = new ArrayList<>();
         this.totalPrice = 0.0;
+        this.paymentMethod = "Cash";
+        this.paymentStatus = "Pending";
     }
 
     public void addAndVerifyItem(Item item, int quantity) throws OutOfStockException {
@@ -52,24 +56,76 @@ public class Transaction implements PaymentProcessor {
         return date;
     }
 
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
     // REQ 4: Overriding Interface Abstract Method
     @Override
     public void processPayment(double amount) {
-        System.out.println("Gateway: Processing secure terminal transaction total of RM " + amount);
-        System.out.println("Gateway: Authorization Status [SUCCESS] for ID: " + transactionId);
+
+        paymentStatus = "SUCCESS";
+
+        System.out.println();
+        System.out.println("===========================================");
+        System.out.println("          PAYMENT GATEWAY");
+        System.out.println("===========================================");
+        System.out.printf("Transaction ID : %s%n", transactionId);
+        System.out.printf("Payment Method : %s%n", paymentMethod);
+        System.out.printf("Amount Paid    : RM %.2f%n", amount);
+        System.out.println("Status         : " + paymentStatus);
+        System.out.println("===========================================");
     }
 
     public void printReceipt() {
-        System.out.println("\n----------- ORDER RECEIPT -----------");
-        System.out.println("Receipt ID  : " + transactionId);
-        System.out.println("Date Issued : " + date);
-        System.out.println("-------------------------------------");
-        for (TransactionItem line : orderedItems) {
-            System.out.println("- " + line.getItemName() + " x" + line.getQuantity() + " | Sub: RM " + line.getSubTotal());
+
+        System.out.println();
+        System.out.println("======================================================");
+        System.out.println("              ONLINE SHOP RECEIPT");
+        System.out.println("======================================================");
+
+        System.out.println("Receipt ID : " + transactionId);
+        System.out.println("Customer   : " + customerId);
+        System.out.println("Date       : " + date);
+
+        System.out.println("------------------------------------------------------");
+
+        System.out.printf("%-20s %-8s %-10s %-10s%n",
+                "Item",
+                "Qty",
+                "Price",
+                "Total");
+
+        System.out.println("------------------------------------------------------");
+
+        for(TransactionItem line : orderedItems){
+
+            System.out.printf("%-20s %-8d RM %-7.2f RM %-7.2f%n",
+                    line.getItemName(),
+                    line.getQuantity(),
+                    line.getPriceAtPurchase(),
+                    line.getSubTotal());
+
         }
-        System.out.println("-------------------------------------");
-        System.out.println("TOTAL NET BILL: RM " + totalPrice);
-        System.out.println("-------------------------------------\n");
+
+        System.out.println("------------------------------------------------------");
+
+        System.out.printf("Grand Total : RM %.2f%n", totalPrice);
+
+        System.out.println("Payment     : " + paymentMethod);
+        System.out.println("Status      : " + paymentStatus);
+
+        System.out.println("======================================================");
+        System.out.println("      Thank You For Shopping With Us!");
+        System.out.println("======================================================");
     }
 
     public ArrayList<TransactionItem> getOrderedItems() {

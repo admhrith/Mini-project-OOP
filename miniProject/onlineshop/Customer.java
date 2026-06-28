@@ -14,7 +14,75 @@ public class Customer extends User{
     }
 
     public void addToCart(Item item) {
+
         shoppingCart.add(item);
+
+        System.out.println();
+        System.out.println(item.getItemName() + " successfully added into cart.");
+
+    }   
+
+    public void viewCart(){
+
+        System.out.println();
+        System.out.println("=============== SHOPPING CART ===============");
+
+        if(shoppingCart.isEmpty()){
+
+            System.out.println("Your shopping cart is empty.");
+            return;
+
+        }
+
+        int no = 1;
+
+        for(Item item : shoppingCart){
+
+            System.out.printf("%d. %-25s RM %.2f%n",
+                    no++,
+                    item.getItemName(),
+                    item.getItemPrice());
+
+        }
+
+    }
+
+    public double calculateCartTotal(){
+
+        double total = 0;
+
+        for(Item item : shoppingCart){
+
+            total += item.getItemPrice();
+
+        }
+
+        return total;
+
+    }
+
+    public void removeFromCart(int index){
+
+        if(index >=0 && index < shoppingCart.size()){
+
+            shoppingCart.remove(index);
+
+            System.out.println("Item removed.");
+
+        }
+
+        else{
+
+            System.out.println("Invalid selection.");
+
+        }
+
+    }
+
+    public void clearCart(){
+
+        shoppingCart.clear();
+
     }
 
     public ArrayList<Item> getShoppingCart() {
@@ -31,11 +99,23 @@ public class Customer extends User{
 
     @Override
     public void displayProfile() {
-        System.out.println("===== CUSTOMER PROFILE =====");
+
+        System.out.println();
+        System.out.println("============== CUSTOMER PROFILE ==============");
+
         System.out.println("Customer ID : " + userId);
         System.out.println("Name        : " + name);
         System.out.println("Email       : " + email);
         System.out.println("Address     : " + address);
-        System.out.println("Cart Items  : " + shoppingCart.size());
+
+        System.out.println("----------------------------------------------");
+
+        System.out.println("Items In Cart : " + shoppingCart.size());
+
+        System.out.printf("Cart Total    : RM %.2f%n",
+                calculateCartTotal());
+
+        System.out.println("==============================================");
+
     }
 }

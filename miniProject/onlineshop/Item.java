@@ -22,6 +22,7 @@ public class Item {
         this.unitItem = unitItem;
     }
 
+
     // Accessors and Mutators
     public String getItemId() { return itemId; }
     public void setItemId(String itemId) { this.itemId = itemId; }
@@ -38,4 +39,73 @@ public class Item {
     public double calcItemPrice(int quantity) {
         return this.itemPrice * quantity;
     }
+
+    public void displayItem() {
+
+        System.out.printf("%-8s %-25s RM %-10.2f %-8d",
+                itemId,
+                itemName,
+                itemPrice,
+                unitItem);
+
+        if (unitItem == 0) {
+
+            System.out.print(" OUT OF STOCK");
+
+        } else if (unitItem <= 5) {
+
+            System.out.print(" LOW STOCK");
+
+        } else {
+
+            System.out.print(" AVAILABLE");
+
+        }
+
+        System.out.println();
+
+    }
+
+    @Override
+    public String toString() {
+
+        return String.format("%s - %s (RM %.2f) Stock: %d",
+                itemId,
+                itemName,
+                itemPrice,
+                unitItem);
+
+    }
+
+    public String getStockStatus(){
+
+        if(unitItem==0){
+
+            return "OUT OF STOCK";
+
+        }
+
+        if(unitItem<=5){
+
+            return "LOW STOCK";
+
+        }
+
+        return "AVAILABLE";
+
+    }
+
+    public void restock(int quantity){
+
+        unitItem += quantity;
+
+    }
+
+    public void reduceStock(int quantity){
+
+        unitItem -= quantity;
+
+    }
+
+    
 }
