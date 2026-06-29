@@ -12,7 +12,7 @@ public class main {
         String role = sc.nextLine().trim().toLowerCase();
 
         if (role.equals("admin")) {
-            // Load predefined admins
+            
             List<Admin> admins = Admin.getDefaultAdmins();
 
             System.out.print("Enter Admin Username: ");
@@ -32,7 +32,7 @@ public class main {
                 System.out.println("\nLogin successful!");
                 loggedInAdmin.displayProfile();
 
-                // Admin menu
+                
                 boolean running = true;
                 while (running) {
                     System.out.println("\n=== ADMIN MENU ===");
@@ -66,7 +66,7 @@ public class main {
                             String removeId = sc.nextLine();
                             
                             Item itemToRemove = null;
-                            for (Item item : Item.getItemCatalog()) { // shared catalog reference
+                            for (Item item : Item.getItemCatalog()) { 
                                   if (item.getItemId().equals(removeId)) {
                                   itemToRemove = item;
                                   break;
@@ -76,14 +76,14 @@ public class main {
                             if (itemToRemove == null) {
                                   System.out.println("Error: Item with ID " + removeId + " not found.");
                                   System.out.println("Returning to Admin Menu...");
-                                  break; // exit this case, go back to menu loop
+                                  break; 
                             }
     
                             shop.deleteItem(removeId);
                             System.out.println("Item removed successfully!");
                             break;
 
-                        case 3: // Edit item integration
+                        case 3: 
                             System.out.print("Enter Item ID to edit: ");
                             String editId = sc.nextLine();
                             
@@ -98,7 +98,7 @@ public class main {
                             if (itemToEdit == null) {
                                  System.out.println("Error: Item with ID " + editId + " not found.");
                                  System.out.println("Returning to Admin Menu...");
-                                 break; // exit this case, go back to menu loop
+                                 break; 
                             }
     
                             System.out.print("Enter new Item Name: ");
@@ -172,11 +172,9 @@ public class main {
                             System.out.println("\nLogin failed. Invalid credentials.");
                             System.out.println("\nTry again or type 'back' to return to Customer Menu.");
 
-                            // Allow user to break out
                             System.out.print("Enter choice: ");
                             String retry = sc.nextLine();
                             if (retry.equalsIgnoreCase("back")) {
-                            // break out to customer choice selection
                                   break;
                             }
                       } 

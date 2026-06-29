@@ -30,7 +30,7 @@ public class Admin extends User {
         System.out.println("Role     : " + adminRole);
     }
 
-    // ✅ Return multiple predefined admins
+    // Return multiple predefined admins
     public static List<Admin> getDefaultAdmins() {
         List<Admin> admins = new ArrayList<>();
         admins.add(new Admin("A001", "System Admin", "min@gmail.com", "Inventory Manager", "amin", "1234"));

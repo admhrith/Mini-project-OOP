@@ -7,7 +7,7 @@ public class Item {
     private String itemId;
     private String itemName;
     private double itemPrice;
-    private int unitItem; // Available Stock
+    private int unitItem; 
 
     // Default constructor
     public Item() {

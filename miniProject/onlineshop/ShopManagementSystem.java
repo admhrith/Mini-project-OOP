@@ -11,7 +11,7 @@ public class ShopManagementSystem {
 
     // Constructor loads shared reference from Item.java
     public ShopManagementSystem() {
-        productCatalog = (ArrayList<Item>) Item.getItemCatalog(); // points to same list
+        productCatalog = (ArrayList<Item>) Item.getItemCatalog(); 
         customerList = new ArrayList<>();
         transactionHistory = new ArrayList<>();
     }
