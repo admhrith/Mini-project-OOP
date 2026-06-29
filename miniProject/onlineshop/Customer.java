@@ -2,6 +2,8 @@ package miniProject.onlineshop;
 
 import java.util.ArrayList;
 
+import java.util.List;
+
 public class Customer extends User{
 
     private String address;
@@ -37,5 +39,13 @@ public class Customer extends User{
         System.out.println("Email       : " + email);
         System.out.println("Address     : " + address);
         System.out.println("Cart Items  : " + shoppingCart.size());
+    }
+    
+    public static List<Customer> getDefaultCustomers() {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer("C001", "Ali Bin Ahmad", "ali@gmail.com", "Kuala Lumpur"));
+        customers.add(new Customer("C002", "Saleh", "saleh@gmail.com", "Johor Bahru"));
+        customers.add(new Customer("C003", "Johan", "johan@gmail.com", "Penang"));
+        return customers;
     }
 }

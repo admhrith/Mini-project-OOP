@@ -1,21 +1,23 @@
 package miniProject.onlineshop;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShopManagementSystem {
-    //Attributes
+    // Attributes
     private ArrayList<Item> productCatalog;
     private ArrayList<Customer> customerList;
     private ArrayList<Transaction> transactionHistory;
 
-    //Constructor
+    // Constructor loads shared reference from Item.java
     public ShopManagementSystem() {
-        productCatalog = new ArrayList<>();
+        productCatalog = (ArrayList<Item>) Item.getItemCatalog(); // points to same list
         customerList = new ArrayList<>();
         transactionHistory = new ArrayList<>();
     }
 
-    //item management
+
+    // Item management
     public void addItem(Item item) {
         productCatalog.add(item);
     }
@@ -45,25 +47,34 @@ public class ShopManagementSystem {
         }
     }
 
-    //Customer Management
+    // Deduct stock when customer buys
+    public boolean deductStock(String itemId, int quantity) throws OutOfStockException {
+        for (Item item : productCatalog) {
+            if (item.getItemId().equals(itemId)) {
+                if (item.getUnitItem() >= quantity) {
+                    item.setUnitItem(item.getUnitItem() - quantity);
+                    return true;
+                } else {
+                    throw new OutOfStockException("Not enough stock for " + item.getItemName());
+                }
+            }
+        }
+        System.out.println("Item not found.");
+        return false;
+    }
+
+    // Customer Management
     public void addCustomer(Customer customer) {
         customerList.add(customer);
     }
 
-    public void editCustomer(String userId, String newName, String newEmail, String newAddress) {
+    public Customer loginCustomer(String userId, String email) {
         for (Customer c : customerList) {
-            if (c.getUserId().equals(userId)) {
-                c.setName(newName);
-                c.setEmail(newEmail);
-                c.setAddress(newAddress);
-                return;
+            if (c.getUserId().equals(userId) && c.getEmail().equals(email)) {
+                return c;
             }
         }
-        System.out.println("Customer with ID " + userId + " not found.");
-    }
-
-    public void deleteCustomer(String userId) {
-        customerList.removeIf(c -> c.getUserId().equals(userId));
+        return null;
     }
 
     public void displayCustomers() {
@@ -73,7 +84,7 @@ public class ShopManagementSystem {
         }
     }
 
-    //Transaction Management
+    // Transaction Management
     public void recordTransaction(Transaction transaction) {
         transactionHistory.add(transaction);
     }
