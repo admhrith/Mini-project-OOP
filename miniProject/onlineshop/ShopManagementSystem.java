@@ -9,33 +9,52 @@ public class ShopManagementSystem {
     private ArrayList<Customer> customerList;
     private ArrayList<Transaction> transactionHistory;
 
-    // Constructor loads shared reference from Item.java
+    
     public ShopManagementSystem() {
         productCatalog = (ArrayList<Item>) Item.getItemCatalog(); 
         customerList = new ArrayList<>();
         transactionHistory = new ArrayList<>();
     }
-
+    
+    public Item findItem(String itemId) {
+       for (Item item : productCatalog) {
+           if (item.getItemId().equals(itemId)) {
+               return item;
+           }
+       }
+       return null;
+    }
 
     // Item management
-    public void addItem(Item item) {
-        productCatalog.add(item);
+    public boolean addItem(Item item) {
+          if (findItem(item.getItemId()) != null) {
+              System.out.println("Error: Item with ID " + item.getItemId() + " already exists.");
+              return false;
+          }
+          productCatalog.add(item);
+          return true;
     }
 
-    public void editItem(String itemId, String newName, double newPrice, int newUnitItem) {
-        for (Item item : productCatalog) {
-            if (item.getItemId().equals(itemId)) {
-                item.setItemName(newName);
-                item.setItemPrice(newPrice);
-                item.setUnitItem(newUnitItem);
-                return;
-            }
-        }
-        System.out.println("Item with ID " + itemId + " not found.");
+    public boolean editItem(String itemId, String newName, double newPrice, int newUnitItem) {
+          Item item = findItem(itemId);
+          if (item == null) {
+              System.out.println("Error: Item ID " + itemId + " not found.");
+              return false;
+          }
+          item.setItemName(newName);
+          item.setItemPrice(newPrice);
+          item.setUnitItem(newUnitItem);
+          return true;
     }
 
-    public void deleteItem(String itemId) {
-        productCatalog.removeIf(item -> item.getItemId().equals(itemId));
+    public boolean deleteItem(String itemId) {
+          Item item = findItem(itemId);
+          if (item == null) {
+              System.out.println("Error: Item ID " + itemId + " not found.");
+              return false;
+          }
+          productCatalog.remove(item);
+          return true;
     }
 
     public void displayCatalog() {
@@ -47,20 +66,14 @@ public class ShopManagementSystem {
         }
     }
 
-    // Deduct stock when customer buys
-    public boolean deductStock(String itemId, int quantity) throws OutOfStockException {
-        for (Item item : productCatalog) {
-            if (item.getItemId().equals(itemId)) {
-                if (item.getUnitItem() >= quantity) {
-                    item.setUnitItem(item.getUnitItem() - quantity);
-                    return true;
-                } else {
-                    throw new OutOfStockException("Not enough stock for " + item.getItemName());
-                }
-            }
-        }
-        System.out.println("Item not found.");
-        return false;
+    
+    public boolean isStockAvailable(String itemId, int quantity) {
+          for (Item item : productCatalog) {
+              if (item.getItemId().equals(itemId)) {
+                  return item.getUnitItem() >= quantity;
+              }
+          }
+          return false;
     }
 
     // Customer Management
